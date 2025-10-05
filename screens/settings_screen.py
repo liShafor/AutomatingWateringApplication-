@@ -1,0 +1,5 @@
+# настройки
+
+
+class SettingsScreen:
+    pass

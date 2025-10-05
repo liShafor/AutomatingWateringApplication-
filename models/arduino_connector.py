@@ -1,0 +1,2 @@
+class ArduinoConnector:
+    pass
