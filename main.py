@@ -1,26 +1,35 @@
 from kivy.app import App
+from kivy.uix.screenmanager import ScreenManager
 from kivy.core.window import Window
-from screens.screen_manager import AppScreenManager
+
+from screens.main_screen import MainScreen
+from screens.autowatering_screen import AutoWateringScreen
+from screens.history_screen import HistoryScreen
+from screens.plants_screen import PlantsScreen
+from screens.documentation_screen import DocumentationScreen
+
+import sys
+import os
 
 
-class AutomaticWateringApp(App):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.title = "Приложение для автополива"
+sys.path.append('screens')
+sys.path.append('widgets')
+sys.path.append('models')
 
+
+class WateringApp(App):
     def build(self):
-        Window.size = (360, 640)
-        Window.minimum_width = 360
-        Window.minimum_height = 640
-        Window.clearcolor = "#2d2d2d"
-        return AppScreenManager()
+        self.load_kv('watering.kv')
 
-    def on_start(self):
-        print(f'Приложение "{self.title}" запущено')
+        sm = ScreenManager()
+        sm.add_widget(MainScreen(name='main'))
+        sm.add_widget(AutoWateringScreen(name='autowatering'))
+        sm.add_widget(HistoryScreen(name='history'))
+        sm.add_widget(PlantsScreen(name='plants'))
+        sm.add_widget(DocumentationScreen(name='documentation'))
 
-    def on_stop(self):
-        print(f'Приложение "{self.title}" закрыто')
+        return sm
 
 
 if __name__ == '__main__':
-    AutomaticWateringApp().run()
+    WateringApp().run()

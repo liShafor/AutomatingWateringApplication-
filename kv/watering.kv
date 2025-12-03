@@ -1,0 +1,554 @@
+#:import Factory kivy.factory.Factory
+#:import hex kivy.utils.get_color_from_hex
+#:import Window kivy.core.window.Window
+
+<Particle>:
+    canvas:
+        Color:
+            rgba: [0.3, 0.8, 0.7, 0.15]
+        Ellipse:
+            pos: self.pos
+            size: [self.particle_size, self.particle_size]
+
+<ParticleBackground>:
+    canvas.before:
+        Color:
+            rgba: hex('#0d1b2a')
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<MainScreen>:
+    ParticleBackground:
+        id: background
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 20
+
+        Label:
+            text: 'AutoWatering'
+            font_size: '32sp'
+            bold: True
+            color: hex('#ffffff')
+            size_hint_y: 0.2
+            canvas.before:
+                Color:
+                    rgba: [0, 0, 0, 0.3]
+                RoundedRectangle:
+                    pos: self.x-10, self.y-5
+                    size: self.width+20, self.height+10
+                    radius: [15]
+
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 15
+            padding: 10
+
+            Button:
+                text: 'Автополив'
+                on_press: app.root.current = 'autowatering'
+                background_color: [0, 0, 0, 0]
+                canvas.before:
+                    Color:
+                        rgba: hex('#1b4332') if self.state == 'normal' else hex('#2d6a4f')
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [20]
+                    Color:
+                        rgba: hex('#40916c')
+                    Line:
+                        rounded_rectangle: [self.x, self.y, self.width, self.height, 20]
+                        width: 1.5
+                color: [1, 1, 1, 1]
+                font_size: '18sp'
+                bold: True
+                size_hint_y: None
+                height: 70
+
+            Button:
+                text: 'История полива'
+                on_press: app.root.current = 'history'
+                background_color: [0, 0, 0, 0]
+                canvas.before:
+                    Color:
+                        rgba: hex('#1b4332') if self.state == 'normal' else hex('#2d6a4f')
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [20]
+                    Color:
+                        rgba: hex('#40916c')
+                    Line:
+                        rounded_rectangle: [self.x, self.y, self.width, self.height, 20]
+                        width: 1.5
+                color: [1, 1, 1, 1]
+                font_size: '18sp'
+                bold: True
+                size_hint_y: None
+                height: 70
+
+            Button:
+                text: 'Растения'
+                on_press: app.root.current = 'plants'
+                background_color: [0, 0, 0, 0]
+                canvas.before:
+                    Color:
+                        rgba: hex('#1b4332') if self.state == 'normal' else hex('#2d6a4f')
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [20]
+                    Color:
+                        rgba: hex('#40916c')
+                    Line:
+                        rounded_rectangle: [self.x, self.y, self.width, self.height, 20]
+                        width: 1.5
+                color: [1, 1, 1, 1]
+                font_size: '18sp'
+                bold: True
+                size_hint_y: None
+                height: 70
+
+            Button:
+                text: 'Документация'
+                on_press: app.root.current = 'documentation'
+                background_color: [0, 0, 0, 0]
+                canvas.before:
+                    Color:
+                        rgba: hex('#1b4332') if self.state == 'normal' else hex('#2d6a4f')
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [20]
+                    Color:
+                        rgba: hex('#40916c')
+                    Line:
+                        rounded_rectangle: [self.x, self.y, self.width, self.height, 20]
+                        width: 1.5
+                color: [1, 1, 1, 1]
+                font_size: '18sp'
+                bold: True
+                size_hint_y: None
+                height: 70
+
+<BackButton>:
+    text: '<-'
+    font_size: '24sp'
+    color: [1, 1, 1, 1]
+    size_hint_x: None
+    width: 50
+
+<AutoWateringScreen>:
+    ParticleBackground:
+        id: background
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: 0.1
+            padding: 10
+
+            BackButton:
+                on_press: app.root.current = 'main'
+
+            Label:
+                text: 'Автополив'
+                font_size: '24sp'
+                bold: True
+                color: hex('#ffffff')
+
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 30
+            spacing: 20
+
+            Label:
+                text: 'Управление системой автополива'
+                font_size: '20sp'
+                color: hex('#90e0ef')
+                text_size: self.width, None
+                halign: 'center'
+
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: 15
+                padding: 20
+                canvas.before:
+                    Color:
+                        rgba: [0.1, 0.2, 0.3, 0.7]
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [25]
+
+                Label:
+                    text: 'Статус: Система отключена'
+                    font_size: '16sp'
+                    color: hex('#ff9e00')
+                    bold: True
+
+                Button:
+                    text: 'Запустить полив'
+                    background_color: [0, 0, 0, 0]
+                    canvas.before:
+                        Color:
+                            rgba: hex('#1e6f5c') if self.state == 'normal' else hex('#2a9d8f')
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [20]
+                    color: [1, 1, 1, 1]
+                    font_size: '16sp'
+                    bold: True
+                    size_hint_y: None
+                    height: 50
+
+                Button:
+                    text: 'Настройки расписания'
+                    background_color: [0, 0, 0, 0]
+                    canvas.before:
+                        Color:
+                            rgba: hex('#1e6f5c') if self.state == 'normal' else hex('#2a9d8f')
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [20]
+                    color: [1, 1, 1, 1]
+                    font_size: '16sp'
+                    bold: True
+                    size_hint_y: None
+                    height: 50
+
+            Label:
+                text: 'Функционал автополива будет реализован после подключения Arduino'
+                font_size: '14sp'
+                color: hex('#caf0f8')
+                text_size: self.width, None
+                halign: 'center'
+
+<MenuButton@Button>:
+    background_color: [0, 0, 0, 0]
+    canvas.before:
+        Color:
+            rgba: hex('#1b4332') if self.state == 'normal' else hex('#2d6a4f')
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20]
+        Color:
+            rgba: hex('#40916c')
+        Line:
+            rounded_rectangle: [self.x, self.y, self.width, self.height, 20]
+            width: 1.5
+    color: [1, 1, 1, 1]
+    font_size: '18sp'
+    bold: True
+    size_hint_y: None
+    height: 70
+
+<AutoWateringScreen>:
+    ParticleBackground:
+        id: background
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: 0.1
+            padding: 10
+
+            BackButton:
+                on_press: app.root.current = 'main'
+
+            Label:
+                text: 'Автополив'
+                font_size: '24sp'
+                bold: True
+                color: hex('#ffffff')
+
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 30
+            spacing: 20
+
+            Label:
+                text: 'Управление системой автополива'
+                font_size: '20sp'
+                bold: True
+                color: hex('#90e0ef')
+                text_size: self.width, None
+                halign: 'center'
+
+            BoxLayout:
+                orientation: 'vertical'
+                spacing: 15
+                padding: 20
+                canvas.before:
+                    Color:
+                        rgba: [0.1, 0.2, 0.3, 0.7]
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [25]
+
+                Label:
+                    text: 'Статус: Система отключена'
+                    bold: True
+                    font_size: '16sp'
+                    color: hex('#ff9e00')
+                    bold: True
+
+                RoundedButton:
+                    text: 'Запустить полив'
+
+                RoundedButton:
+                    text: 'Настройки расписания'
+
+            Label:
+                text: 'Функционал автополива будет реализован после подключения Arduino'
+                font_size: '14sp'
+                color: hex('#caf0f8')
+                bold: True
+                text_size: self.width, None
+                halign: 'center'
+
+<HistoryScreen>:
+    ParticleBackground:
+        id: background
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: 0.1
+            padding: 10
+
+            BackButton:
+                on_press: app.root.current = 'main'
+
+            Label:
+                text: 'История полива'
+                font_size: '24sp'
+                bold: True
+                color: hex('#ffffff')
+
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 10
+
+            Label:
+                text: 'Последние операции полива'
+                bold: True
+                font_size: '16sp'
+                color: hex('#90e0ef')
+                size_hint_y: 0.08
+                halign: 'center'
+
+            ScrollView:
+                do_scroll_x: False
+                canvas.before:
+                    Color:
+                        rgba: [0.1, 0.2, 0.3, 0.4]
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [15]
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: self.minimum_height
+                    padding: 10
+                    spacing: 8
+                    id: history_container
+
+<PlantsScreen>:
+    ParticleBackground:
+        id: background
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: 0.1
+            padding: 10
+
+            BackButton:
+                on_press: app.root.current = 'main'
+
+            Label:
+                text: 'База растений'
+                font_size: '24sp'
+                bold: True
+                color: hex('#ffffff')
+
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 10
+
+            Label:
+                text: 'Каталог растений и уход за ними'
+                font_size: '16sp'
+                color: hex('#90e0ef')
+                bold: True
+                size_hint_y: 0.08
+                halign: 'center'
+
+            ScrollView:
+                do_scroll_x: False
+                canvas.before:
+                    Color:
+                        rgba: [0.1, 0.2, 0.3, 0.4]
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [15]
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: self.minimum_height
+                    padding: 15
+                    spacing: 12
+                    id: plants_container
+
+
+<DocumentationScreen>:
+    ParticleBackground:
+        id: background
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: 0.1
+            padding: 10
+
+            BackButton:
+                on_press: app.root.current = 'main'
+
+            Label:
+                text: 'Документация'
+                font_size: '24sp'
+                bold: True
+                color: hex('#ffffff')
+
+        ScrollView:
+            do_scroll_x: False
+
+            BoxLayout:
+                orientation: 'vertical'
+                padding: 20
+                spacing: 20
+                size_hint_y: None
+                height: self.minimum_height
+
+                Label:
+                    text: 'Документация по проекту'
+                    font_size: '22sp'
+                    color: hex('#90e0ef')
+                    bold: True
+                    halign: 'center'
+                    size_hint_y: None
+                    height: 40
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    spacing: 15
+                    padding: 20
+                    size_hint_y: None
+                    height: 200
+                    canvas.before:
+                        Color:
+                            rgba: [0.1, 0.2, 0.3, 0.7]
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [25]
+
+                    RoundedButton:
+                        text: 'Техническая документация'
+                        on_press: app.open_tech_docs()
+
+                    RoundedButton:
+                        text: 'Презентация проекта'
+                        on_press: app.open_presentation()
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    spacing: 15
+                    padding: 20
+                    size_hint_y: None
+                    height: 200
+                    canvas.before:
+                        Color:
+                            rgba: [0.15, 0.3, 0.25, 0.7]
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [20]
+
+                    Label:
+                        text: 'Инструкция по использованию:'
+                        font_size: '18sp'
+                        color: hex('#3aa654')
+                        bold: True
+                        size_hint_y: None
+                        height: 30
+
+                    Label:
+                        text: '1) Выберите растение из базы данных\n2) Настройте расписание полива\n3) Запустите систему автополива\n4) Отслеживайте историю поливов\n5) Настройте параметры для каждого растения'
+                        font_size: '15sp'
+                        color: [1, 1, 1, 1]
+                        text_size: self.width, None
+                        halign: 'left'
+                        size_hint_y: None
+                        height: 120
+
+
+<HistoryItem@BoxLayout>:
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: 70
+    padding: 10
+    spacing: 10
+    canvas.before:
+        Color:
+            rgba: [0.2, 0.4, 0.4, 0.6] if self.state == 'normal' else [0.3, 0.5, 0.5, 0.8]
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [12]
+        Color:
+            rgba: hex('#40916c')
+        Line:
+            rounded_rectangle: [self.x, self.y, self.width, self.height, 12]
+            width: 1
+
+<PlantCard@BoxLayout>:
+    orientation: 'vertical'
+    size_hint_y: None
+    height: 200
+    padding: 15
+    spacing: 8
+    canvas.before:
+        Color:
+            rgba: [0.15, 0.3, 0.3, 0.7]
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [15]
+        Color:
+            rgba: hex('#4ecdc4')
+        Line:
+            rounded_rectangle: [self.x, self.y, self.width, self.height, 15]
+            width: 1.5
