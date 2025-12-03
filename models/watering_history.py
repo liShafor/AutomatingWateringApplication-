@@ -5,18 +5,20 @@ from datetime import datetime
 
 
 class WateringRecord:
-    def __init__(self, data: str, time: str, status: str, duration: str = "",
-                 water_used: str = ""):
-        self.data = data
+    def __init__(self, date: str, time: str, plant: str, status: str,
+                 duration: str = "", water_used: str = ""):
+        self.date = date
         self.time = time
+        self.plant = plant
         self.status = status
         self.duration = duration
         self.water_used = water_used
 
     def to_dict(self) -> Dict[str, Any]:
         return {
-            "data": self.data,
+            "date": self.date,
             "time": self.time,
+            "plant": self.plant,
             "status": self.status,
             "duration": self.duration,
             "water_used": self.water_used
@@ -24,7 +26,7 @@ class WateringRecord:
 
 
 class HistoryManager:
-    def __init__(self, data_file: str = " data/watering_history.json"):
+    def __init__(self, data_file: str = "data/watering_history.json"):
         self.data_file = data_file
         self.history: List[WateringRecord] = []
         self.load_history()
@@ -36,6 +38,9 @@ class HistoryManager:
                 self.history = [WateringRecord(**i) for i in data.get("history", [])]
             return self.history
         except FileNotFoundError:
+            return []
+        except Exception as e:
+            print(f"Ошибка загрузки истории: {e}")
             return []
 
     def save_history(self):

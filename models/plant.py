@@ -4,10 +4,10 @@ from typing import Dict, List, Any
 
 
 class Plant:
-    def __init__(self, name: str, plant_type: str, description: str,
+    def __init__(self, name: str, type: str, description: str,
                  watering: str, features: str):
         self.name = name
-        self.plant_type = plant_type
+        self.type = type
         self.description = description
         self.watering = watering
         self.features = features
@@ -15,7 +15,7 @@ class Plant:
     def to_dict(self) -> Dict[str, Any]:
         return {
             "name": self.name,
-            "type": self.plant_type,
+            "type": self.type,
             "description": self.description,
             "watering": self.watering,
             "features": self.features

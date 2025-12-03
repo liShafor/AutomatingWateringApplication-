@@ -6,14 +6,15 @@ from models.watering_history import HistoryManager
 
 class HistoryScreen(Screen):
     def on_enter(self):
-        self.loaf_history()
+        self.load_history()
 
-    def loaf_history(self):
+    def load_history(self):
         try:
             manager = HistoryManager()
             history_data = manager.get_all_records()
             self.display_history(history_data)
         except Exception as e:
+            print(f"Ошибка в load_history: {e}")
             self.ids.history_container.clear_widgets()
             label = Label(
                 text='Ошибка загрузки истории',
@@ -24,6 +25,15 @@ class HistoryScreen(Screen):
 
     def display_history(self, history_data):
         self.ids.history_container.clear_widgets()
+
+        if not history_data:
+            label = Label(
+                text='История полива пуста',
+                color=[0.7, 0.7, 0.7, 1],
+                font_size='16sp'
+            )
+            self.ids.history_container.add_widget(label)
+            return
 
         for record in history_data:
             history_item = BoxLayout(

@@ -2,12 +2,11 @@ from kivy.uix.widget import Widget
 from kivy.properties import NumericProperty
 from kivy.clock import Clock
 from kivy.core.window import Window
-
 from random import randint
 
 
 class Particle(Widget):
-    v_x = NumericProperty(0)  # скорости x и y + размер шарика
+    v_x = NumericProperty(0)
     v_y = NumericProperty(0)
     particle_size = NumericProperty(0)
 
@@ -40,9 +39,9 @@ class ParticleBackground(Widget):
             particle.y = randint(0, int(Window.height - 80))
             self.particles.append(particle)
             self.add_widget(particle)
-        Clock.schedule_once(self.update_particles, 1 / 65)
+
+        Clock.schedule_interval(self.update_particles, 1 / 60)
 
     def update_particles(self, dt):
         for particle in self.particles:
-            particle.x += particle.velocity_x * dt
-            particle.y += particle.velocity_y * dt
+            particle.move()
