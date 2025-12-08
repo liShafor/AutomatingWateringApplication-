@@ -369,6 +369,29 @@
                     spacing: 8
                     id: history_container
 
+<AddPlantScreen>:
+    name: 'add_plant'
+
+    ParticleBackground:
+        id: background
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: 0.1
+            padding: 10
+
+            BackButton:
+                on_press: app.root.current = 'plants'
+
+            Label:
+                text: 'Добавить растение'
+                font_size: '24sp'
+                bold: True
+                color: hex('#ffffff')
+
 <PlantsScreen>:
     ParticleBackground:
         id: background
@@ -500,13 +523,13 @@
                     Label:
                         text: 'Инструкция по использованию:'
                         font_size: '18sp'
-                        color: hex('#3aa654')
+                        color: hex('#ff9e00')
                         bold: True
                         size_hint_y: None
                         height: 30
 
                     Label:
-                        text: '1) Выберите растение из базы данных\n2) Настройте расписание полива\n3) Запустите систему автополива\n4) Отслеживайте историю поливов\n5) Настройте параметры для каждого растения'
+                        text: 'Будет добавлено позже'
                         font_size: '15sp'
                         color: [1, 1, 1, 1]
                         text_size: self.width, None
